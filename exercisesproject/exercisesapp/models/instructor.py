@@ -12,11 +12,11 @@ class Instructor(models.Model):
     cohort = models.ForeignKey(Cohort, on_delete=models.CASCADE)
 
 
-    @receiver(post_save, sender=User)
-    def create_instructor(sender, instance, created, **kwargs):
-        if created:
-            Instructor.objects.create(user=instance)
+    # @receiver(post_save, sender=User)
+    # def create_instructor(sender, instance, created, **kwargs):
+    #     if created:
+    #         Instructor.objects.create(user=instance)
 
-    @receiver(post_save, sender=User)
-    def save_instructor(sender, instance, **kwargs):
-        instance.instructor.save()
+    # @receiver(post_save, sender=User)
+    # def save_instructor(sender, instance, **kwargs):
+    #     instance.instructor.save()
