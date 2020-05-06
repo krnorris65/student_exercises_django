@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 def instructor_list(request):
     if request.method == 'GET':
-        with sqlite.connect(Connection.db_path) as conn:
+        with sqlite3.connect(Connection.db_path) as conn:
             conn.row_factory = model_factory(Instructor)
             db_cursor = conn.cursor()
 
@@ -16,7 +16,7 @@ def instructor_list(request):
                 i.id,
                 i.slack_handle,
                 i.specialty,
-                i.cohort_id
+                i.cohort_id,
                 i.user_id,
                 u.first_name,
                 u.last_name
