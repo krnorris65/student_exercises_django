@@ -19,4 +19,4 @@ class Instructor(models.Model):
 
     @receiver(post_save, sender=User)
     def save_instructor(sender, instance, **kwargs):
-        instance.librarian.save()
+        instance.instructor.save()
