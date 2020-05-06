@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h2>Instructors</h2>
-</body>
-</html>
+{% extends 'shared/base.html'%}
+
+{% block content %}
+<h2>List of Instructors</h2>
+
+<ul>
+    {%for i in all_instructors%}
+        <li>{{i.first_name}} {{i.last_name}}</li>
+    {%endfor%}
+</ul>
+{% endblock%}

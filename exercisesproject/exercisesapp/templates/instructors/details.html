@@ -1,0 +1,19 @@
+{% extends 'shared/base.html' %}
+
+{% block content%}
+<section id="instructor-details">
+    <h2>{{instructor.first_name}} {{instructor.last_name}}</h2>
+    <h3>Currently instructing: {{instructor.cohort.name}}</h3>
+    <p>Slack Handle: {{instructor.slack_handle}}</p>
+    <p>Specialty: {{instructor.specialty}}</p>
+</section>
+<section id="instructor-actions">
+    <form action="{% url 'exercisesapp:instructor_edit_form' instructor.id %}" method="GET">
+        {%csrf_token%}
+        <button>Edit</button>
+    </form>
+</section>
+
+
+
+{% endblock%}

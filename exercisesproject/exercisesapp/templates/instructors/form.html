@@ -1,0 +1,30 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+<h2>Update Instructor Info</h2>
+
+{% if instructor.id is not None %}
+<form action="{% url 'libraryapp:instructor' instructor.id%}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <label for="cohort">Cohort: </label>
+        <select id="cohort" type="text" name="cohort">
+            {% for cohort in all_cohorts %}
+            <option {% if cohort.id == book.cohort_id %}selected{% endif %} value="{{ cohort.id }}">
+                {{ cohort.name }}</option>
+            {% endfor %}
+        </select>
+    </fieldset>
+    <fieldset>
+        <label for="slack_handle">Slack Handle: </label>
+        <input id="slack_handle" type="text" name="slack_handle" value="{{ instructor.slack_handle }}">
+    </fieldset>
+    <fieldset>
+        <label for="specialty">Specialty: </label>
+        <input id="specialty" type="text" name="specialty" value="{{ instructor.specialty }}">
+    </fieldset>
+    <input type="hidden" name="actual_method" value="PUT">
+    <input type="submit" value="Update" />
+</form>
+{% endif %}
+{% endblock %}

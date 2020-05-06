@@ -5,5 +5,7 @@ app_name = "exercisesapp"
 
 urlpatterns = [
     path('', home, name='home'),
-    path('instructors/', instructor_list, name="instructors")
+    path('instructors/', instructor_list, name="instructors"),
+    path('instructors/<int:instructor_id>/edit', instructor_form, name="instructor_edit_form"),
+    path('instructors/<int:instructor_id>', instructor_details, name="instructors")
 ]
