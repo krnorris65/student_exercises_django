@@ -17,7 +17,7 @@ def get_instructor(instructor_id):
                 i.cohort_id,
                 u.first_name,
                 u.last_name
-            FROM exercisesapp_instructor i 
+                FROM exercisesapp_instructor i 
             JOIN auth_user u ON i.user_id = u.id
             WHERE i.id = ?
             """, (instructor_id,))

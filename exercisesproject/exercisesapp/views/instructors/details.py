@@ -41,7 +41,7 @@ def instructor_details(request, instructor_id):
                 c.name
             FROM exercisesapp_instructor i 
             JOIN auth_user u ON i.user_id = u.id
-            JOIN exercisesapp_cohort c ON i.cohort_id = c.id
+            LEFT JOIN exercisesapp_cohort c ON i.cohort_id = c.id
             WHERE i.id = ?
             """, (instructor_id,))
 
@@ -53,3 +53,48 @@ def instructor_details(request, instructor_id):
             }
 
             return render(request, template, context)
+    if request.method == 'POST':
+        form_data = request.POST
+
+        if (
+            "actual_method" in form_data
+            and form_data["actual_method"] == "PUT"
+        ):
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                cohort = form_data['cohort']
+                slack = form_data['slack_handle']
+                specialty = form_data['specialty']
+
+
+                # if these fields are empty save them as NULL values in database, not EMPTY values
+                if cohort == "":
+                    cohort = None
+                if slack == "":
+                    slack = None
+                if specialty == "":
+                    specialty = None
+
+                db_cursor.execute("""
+                UPDATE exercisesapp_instructor
+                SET cohort_id = ?,
+                    slack_handle = ?,
+                    specialty = ?
+                WHERE id = ?
+                """,
+                (cohort, slack, specialty, instructor_id,))
+
+                db_cursor.execute("""
+                UPDATE auth_user
+                SET first_name = ?,
+                    last_name = ?
+                WHERE id = (SELECT user_id 
+                    FROM exercisesapp_instructor 
+                    WHERE id = ?)
+                """,
+                (
+                    form_data['first_name'], form_data['last_name'], instructor_id,
+                ))
+
+            return redirect(reverse('exercisesapp:instructors'))
