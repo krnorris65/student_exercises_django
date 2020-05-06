@@ -1,0 +1,2 @@
+class Connection:
+    db_path = "ABSOLUTE PATH TO DATABASE"
