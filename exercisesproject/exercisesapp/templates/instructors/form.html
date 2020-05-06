@@ -1,0 +1,43 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+<h2>Update Instructor Info</h2>
+{% if instructor.id is not None %}
+    <form action="{% url 'exercisesapp:instructor' instructor.id %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <label for="first_name">First Name: </label>
+            <input id="first_name" type="text" name="first_name" value="{{ instructor.first_name }}">
+        </fieldset>
+        <fieldset>
+            <label for="last_name">Last Name: </label>
+            <input id="last_name" type="text" name="last_name" value="{{ instructor.last_name }}">
+        </fieldset>
+        <fieldset>
+            <label for="cohort">Cohort: </label>
+            <select id="cohort" type="text" name="cohort">
+                <option value="">--Select Cohort--</option>
+                {% for cohort in all_cohorts %}
+                <option {% if cohort.id == instructor.cohort_id %}selected{% endif %} value="{{ cohort.id }}">
+                    {{ cohort.name }}</option>
+                {% endfor %}
+            </select>
+        </fieldset>
+        <fieldset>
+            <label for="slack_handle">Slack Handle: </label>     
+            <input id="slack_handle" type="text" name="slack_handle" {%if instructor.slack_handle is not None %} value="{{ instructor.slack_handle }}"{% endif %}>
+
+        </fieldset>
+        <fieldset>
+            <label for="specialty">Specialty: </label>
+            <input id="specialty" type="text" name="specialty" {%if instructor.specialty is not None %} value="{{ instructor.specialty }}" {% endif %}>
+        </fieldset>
+        <input type="hidden" name="actual_method" value="PUT">
+        <input type="submit" value="Update" />
+    </form>
+    <section>
+        <a href="{% url 'exercisesapp:instructor' instructor.id %}">Cancel</a>
+    </section>
+
+{% endif %}
+{% endblock %}

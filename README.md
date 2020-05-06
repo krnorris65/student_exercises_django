@@ -18,6 +18,7 @@
     pip install django
     pip freeze > requirements.txt
     ```
+1) In the `/exercisesproject/exercisesapp/views` directory, use the `connection.py.example` file to create a `connection.py` file in the same directory and replace `ABSOLUTE PATH TO DATABASE` with the absolute path to `db.sqlite3` on your machine
 1) Run application in virtual environment: 
     ```
     python manage.py runserver
