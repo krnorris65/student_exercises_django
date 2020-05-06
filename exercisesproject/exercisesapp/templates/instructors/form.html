@@ -4,13 +4,13 @@
 <h2>Update Instructor Info</h2>
 
 {% if instructor.id is not None %}
-<form action="{% url 'libraryapp:instructor' instructor.id%}" method="post">
+<form action="{% url 'exercisesapp:instructor' instructor.id %}" method="post">
     {% csrf_token %}
     <fieldset>
         <label for="cohort">Cohort: </label>
         <select id="cohort" type="text" name="cohort">
             {% for cohort in all_cohorts %}
-            <option {% if cohort.id == book.cohort_id %}selected{% endif %} value="{{ cohort.id }}">
+            <option {% if cohort.id == cohort.cohort_id %}selected{% endif %} value="{{ cohort.id }}">
                 {{ cohort.name }}</option>
             {% endfor %}
         </select>

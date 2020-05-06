@@ -25,30 +25,31 @@ def create_instructor(cursor, row):
 
 
 def instructor_details(request, instructor_id):
-    with sqlite3.connect(Connection.db_path) as conn:
-        conn.row_factory = create_instructor
-        db_cursor = conn.cursor()
+    if request.method == 'GET':
+        with sqlite3.connect(Connection.db_path) as conn:
+            conn.row_factory = create_instructor
+            db_cursor = conn.cursor()
 
-        db_cursor.execute(""" 
-        SELECT
-            i.id instructor_id,
-            i.slack_handle,
-            i.specialty,
-            i.cohort_id,
-            u.first_name,
-            u.last_name,
-            c.name
-        FROM exercisesapp_instructor i 
-        JOIN auth_user u ON i.user_id = u.id
-        JOIN exercisesapp_cohort c ON i.cohort_id = c.id
-        WHERE i.id = ?
-        """, (instructor_id,))
+            db_cursor.execute(""" 
+            SELECT
+                i.id instructor_id,
+                i.slack_handle,
+                i.specialty,
+                i.cohort_id,
+                u.first_name,
+                u.last_name,
+                c.name
+            FROM exercisesapp_instructor i 
+            JOIN auth_user u ON i.user_id = u.id
+            JOIN exercisesapp_cohort c ON i.cohort_id = c.id
+            WHERE i.id = ?
+            """, (instructor_id,))
 
-        instructor = db_cursor.fetchone()
+            instructor = db_cursor.fetchone()
 
-        template = 'instructors/details.html'
-        context = {
-            'instructor': instructor
-        }
+            template = 'instructors/details.html'
+            context = {
+                'instructor': instructor
+            }
 
-        return render(request, template, context)
+            return render(request, template, context)
