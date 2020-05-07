@@ -7,9 +7,11 @@
     <p>Slack Handle: {{student.slack_handle}}</p>
 </section>
 <section id="student-exercises">
-    <h3>Assignments:</h3>
+    <h4>Assignments:</h4>
     <ul>
-
+        {% for exercise in student.exercises %}
+        <li>{{exercise.name}} ({{exercise.language}})</li>
+        {% endfor %}
     </ul>
 </section>
 <section id="student-actions">
