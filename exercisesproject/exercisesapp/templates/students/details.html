@@ -1,0 +1,28 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+<section id="student-details">
+    <h2>{{student.first_name}} {{student.last_name}}</h2>
+    <h3>{{student.cohort.name}}</h3>
+    <p>Slack Handle: {{student.slack_handle}}</p>
+</section>
+<section id="student-exercises">
+    <h4>Assignments:</h4>
+    <ul>
+        {% for exercise in student.exercises %}
+        <li>{{exercise.name}} ({{exercise.language}})</li>
+        {% endfor %}
+    </ul>
+</section>
+<section id="student-actions">
+    <form action="{% url 'exercisesapp:student_edit_form' student.id %}" method="GET">
+        {%csrf_token%}
+        <button>Edit</button>
+    </form>
+    <form action="{% url 'exercisesapp:student' student.id %}" method="POST">
+        {%csrf_token%}
+        <input type="hidden" name="actual_method" value="DELETE">
+        <button>Delete</button>
+    </form>
+</section>
+{% endblock %}

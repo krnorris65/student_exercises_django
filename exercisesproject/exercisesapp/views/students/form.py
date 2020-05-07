@@ -2,25 +2,23 @@ import sqlite3
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from ..connection import Connection
-from exercisesapp.models import Cohort, Instructor, model_factory
+from exercisesapp.models import Cohort, Student, model_factory
 
-def get_instructor(instructor_id):
+def get_student(student_id):
     with sqlite3.connect(Connection.db_path) as conn:
-            conn.row_factory = model_factory(Instructor)
+            conn.row_factory = model_factory(Student)
             db_cursor = conn.cursor()
 
             db_cursor.execute(""" 
             SELECT
-                i.id,
-                i.slack_handle,
-                i.specialty,
-                i.cohort_id,
-                u.first_name,
-                u.last_name
-                FROM exercisesapp_instructor i 
-            JOIN auth_user u ON i.user_id = u.id
-            WHERE i.id = ?
-            """, (instructor_id,))
+                s.id,
+                s.first_name,
+                s.last_name,
+                s.slack_handle,
+                s.cohort_id
+            FROM exercisesapp_student s
+            WHERE s.id = ?            
+            """, (student_id,))
 
             return db_cursor.fetchone()
 
@@ -38,15 +36,25 @@ def get_cohorts():
 
         return db_cursor.fetchall()
 
-def instructor_edit_form(request, instructor_id):
-
+def student_form(request):
     if request.method == 'GET':
-        instructor = get_instructor(instructor_id)
         cohorts = get_cohorts()
 
-        template = 'instructors/form.html'
+        template = 'students/form.html'
         context = {
-            'instructor': instructor,
+            'all_cohorts': cohorts
+        }
+
+        return render(request, template, context)
+
+def student_edit_form(request, student_id):
+    if request.method == 'GET':
+        student = get_student(student_id)
+        cohorts = get_cohorts()
+
+        template = 'students/form.html'
+        context = {
+            'student': student,
             'all_cohorts': cohorts
         }
 
