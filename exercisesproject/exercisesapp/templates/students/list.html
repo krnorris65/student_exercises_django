@@ -5,7 +5,7 @@
 
 <ul>
     {% for s in all_students %}
-    <li>{{s.first_name}} {{s.last_name}}</li>
+    <li>{{s.first_name}} {{s.last_name}} <a href="{% url 'exercisesapp:student' s.id %}">More Info</a></li>
     {% endfor %}
 </ul>
 {% endblock %}
