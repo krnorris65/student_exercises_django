@@ -73,3 +73,17 @@ def student_details(request, student_id):
                 (form_data['first_name'], form_data['last_name'], form_data['slack_handle'], form_data['cohort'], student_id))
             
             return redirect('exercisesapp:student', student_id)
+        
+        if (
+            "actual_method" in form_data
+            and form_data["actual_method"] == "DELETE"
+        ):
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute("""
+                    DELETE FROM exercisesapp_student
+                    WHERE id = ?
+                """, (student_id,))
+
+            return redirect(reverse('exercisesapp:students'))
