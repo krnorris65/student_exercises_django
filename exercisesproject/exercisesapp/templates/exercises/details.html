@@ -18,7 +18,11 @@
 </section>
 <section id="exercise-assignments">
     <h4>Assigned to:</h4>
-
+    <ul>
+        {% for assignment in exercise.assignments %}
+        <li>{{assignment.0.first_name}} {{assignment.0.last_name}} (assigned by {{assignment.1.first_name}} {{assignment.1.last_name}})</li>
+        {% endfor %}
+    </ul>
 </section>
 
 {% endblock %}
