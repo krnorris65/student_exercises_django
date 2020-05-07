@@ -57,10 +57,10 @@ def get_exercise(exercise_id):
             u.first_name i_first,
             u.last_name i_last
         FROM exercisesapp_exercise e
-        JOIN exercisesapp_assignment a ON a.exercise_id = e.id
-        JOIN exercisesapp_student s ON a.student_id = s.id
-        JOIN exercisesapp_instructor i ON a.instructor_id = i.id
-        JOIN auth_user u ON i.user_id = u.id
+        LEFT JOIN exercisesapp_assignment a ON a.exercise_id = e.id
+        LEFT JOIN exercisesapp_student s ON a.student_id = s.id
+        LEFT JOIN exercisesapp_instructor i ON a.instructor_id = i.id
+        LEFT JOIN auth_user u ON i.user_id = u.id
         WHERE e.id = ?            
         """, (exercise_id,))
 
@@ -69,7 +69,8 @@ def get_exercise(exercise_id):
         this_exercise = None
         for (exercise, assignment) in exercise_assignments:
             if this_exercise is None:
-                exercise.assignments.append(assignment)
+                if assignment[0].id is not None:
+                    exercise.assignments.append(assignment)
                 this_exercise = exercise
             else:
                 this_exercise.assignments.append(assignment)
