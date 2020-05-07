@@ -22,6 +22,7 @@ def instructor_list(request):
                 u.last_name
             FROM exercisesapp_instructor i 
             JOIN auth_user u ON i.user_id = u.id
+            ORDER BY u.last_name 
             """)
 
             all_instructors = db_cursor.fetchall()

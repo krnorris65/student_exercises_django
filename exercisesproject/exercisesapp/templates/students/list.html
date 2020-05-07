@@ -1,0 +1,11 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+<h2>List of Students</h2>
+
+<ul>
+    {% for s in all_students %}
+    <li>{{s.first_name}} {{s.last_name}}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
