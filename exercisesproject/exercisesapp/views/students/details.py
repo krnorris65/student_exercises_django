@@ -47,9 +47,9 @@ def get_student(student_id):
             e.name exercise_name,
             e.language
         FROM exercisesapp_student s
-        JOIN exercisesapp_cohort c ON c.id = s.cohort_id
-        JOIN exercisesapp_assignment a ON a.student_id = s.id
-        JOIN exercisesapp_exercise e ON e.id = a.exercise_id
+        LEFT JOIN exercisesapp_cohort c ON c.id = s.cohort_id
+        LEFT JOIN exercisesapp_assignment a ON a.student_id = s.id
+        LEFT JOIN exercisesapp_exercise e ON e.id = a.exercise_id
         WHERE s.id = ?            
         """, (student_id,))
 
@@ -59,7 +59,8 @@ def get_student(student_id):
 
         for (s, exercise) in student_assignments:
             if this_student is None:
-                s.exercises.append(exercise)
+                if exercise.id is not None:
+                    s.exercises.append(exercise)
                 this_student = s
             else:
                 this_student.exercises.append(exercise)
