@@ -3,11 +3,12 @@
 {% block content %}
 <h2>Student Form</h2>
 
+
 {% if student.id is not None %}
-    <form action="{% url 'exercisesapp:student' student.id %}" method="POST">
-{% else%}
+<form action="{% url 'exercisesapp:student' student.id %}" method="POST">
+    {% else%}
     <form action="{% url 'exercisesapp:students' %}" method="POST">
-{% endif %}
+        {% endif %}
         {% csrf_token %}
         <fieldset>
             <label for="first_name">First Name: </label>
@@ -28,7 +29,7 @@
             </select>
         </fieldset>
         <fieldset>
-            <label for="slack_handle">Slack Handle: </label>     
+            <label for="slack_handle">Slack Handle: </label>
             <input id="slack_handle" type="text" name="slack_handle" value="{{ student.slack_handle }}">
         </fieldset>
 
@@ -39,9 +40,11 @@
         <input type="submit" value="Submit" />
     </form>
     <section>
+        {% if student.id is not None %}
         <a href="{% url 'exercisesapp:student' student.id %}">Cancel</a>
+        {% else %}
+        <a href="{% url 'exercisesapp:students' %}">Cancel</a>
+        {% endif%}
     </section>
 
-{% endif %}
-
-{% endblock %}
+    {% endblock %}

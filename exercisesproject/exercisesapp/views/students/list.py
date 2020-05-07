@@ -29,3 +29,21 @@ def student_list(request):
                 'all_students': all_students
             }
         return render(request, template_name, context)
+    elif request.method == 'POST':
+        form_data = request.POST
+
+        with sqlite3.connect(Connection.db_path) as conn:
+            db_cursor = conn.cursor()
+
+            db_cursor.execute("""
+            INSERT INTO exercisesapp_student
+            (
+                first_name, last_name, slack_handle,
+                cohort_id
+            )
+            VALUES (?, ?, ?, ?)
+            """,
+            (form_data['first_name'], form_data['last_name'],
+                form_data['slack_handle'], form_data['cohort']))
+
+        return redirect(reverse('exercisesapp:students'))

@@ -53,3 +53,23 @@ def student_details(request, student_id):
         }
 
         return render(request, template, context)
+    if request.method == 'POST':
+        form_data = request.POST
+        if (
+            "actual_method" in form_data
+            and form_data["actual_method"] == "PUT"
+        ):
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute(""" 
+                UPDATE exercisesapp_student
+                SET first_name = ?,
+                last_name = ?,
+                slack_handle = ?,
+                cohort_id = ?
+                WHERE id = ?
+                """,
+                (form_data['first_name'], form_data['last_name'], form_data['slack_handle'], form_data['cohort'], student_id))
+            
+            return redirect('exercisesapp:student', student_id)

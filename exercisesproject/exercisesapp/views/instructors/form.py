@@ -26,17 +26,17 @@ def get_instructor(instructor_id):
 
 def get_cohorts():
     with sqlite3.connect(Connection.db_path) as conn:
-            conn.row_factory = model_factory(Cohort)
-            db_cursor = conn.cursor()
+        conn.row_factory = model_factory(Cohort)
+        db_cursor = conn.cursor()
 
-            db_cursor.execute(""" 
-            SELECT
-                c.id,
-                c.name
-            FROM exercisesapp_cohort c 
-            """)
+        db_cursor.execute(""" 
+        SELECT
+            c.id,
+            c.name
+        FROM exercisesapp_cohort c 
+        """)
 
-            return db_cursor.fetchall()
+        return db_cursor.fetchall()
 
 def instructor_edit_form(request, instructor_id):
 

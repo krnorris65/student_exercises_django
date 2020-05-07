@@ -13,11 +13,11 @@
     </ul>
 </section>
 <section id="student-actions">
-    <!-- <form action="{url 'exercisesapp:student_edit_form' student.id}" method="GET">
+    <form action="{% url 'exercisesapp:student_edit_form' student.id %}" method="GET">
         {%csrf_token%}
         <button>Edit</button>
     </form>
-    <form action="{url 'exercisesapp:student' student.id}" method="POST">
+    <!-- <form action="{url 'exercisesapp:student' student.id}" method="POST">
         {%csrf_token%}
         <input type="hidden" name="actual_method" value="DELETE">
         <button>Delete</button>

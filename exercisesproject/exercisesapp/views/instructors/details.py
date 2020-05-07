@@ -99,4 +99,4 @@ def instructor_details(request, instructor_id):
                     form_data['first_name'], form_data['last_name'], instructor_id,
                 ))
 
-            return redirect(reverse('exercisesapp:instructors'))
+            return redirect('exercisesapp:instructor', instructor_id)
