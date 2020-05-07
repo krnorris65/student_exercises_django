@@ -9,7 +9,7 @@
         <li>
             <div>
                 {{e.name}} ({{e.language}})
-                <button>See Assignments</button>
+                <a href="{% url 'exercisesapp:exercise' e.id %}">See Assignments</a>
             </div>
         </li>
     {% endfor %}
