@@ -4,14 +4,18 @@
 <h2>Exercises</h2>
 <a href="{% url 'exercisesapp:exercise_form' %}">New Exercise</a>
 
-<ul>
-    {% for e in all_exercises %}
+
+    {% for group in all_exercises %}
+    <h4>{{group.language}}</h4>
+    <ul>
+        {% for exercise in group.exercise_list %}
         <li>
             <div>
-                {{e.name}} ({{e.language}})
-                <a href="{% url 'exercisesapp:exercise' e.id %}">See Assignments</a>
+                {{exercise.name}}
+                <a href="{% url 'exercisesapp:exercise' exercise.id %}">See Assignments</a>
             </div>
         </li>
+        {% endfor %}
+    </ul>
     {% endfor %}
-</ul>
 {% endblock %}

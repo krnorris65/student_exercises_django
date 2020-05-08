@@ -21,10 +21,22 @@ def exercise_list(request):
 
             all_exercises = db_cursor.fetchall()
 
+            grouped_exercises = {}
+
+            for exercise in all_exercises:
+                if exercise.language not in grouped_exercises:
+
+                    grouped_exercises[exercise.language] = {
+                        "language": exercise.language,
+                        "exercise_list": [exercise]
+                    }
+                else:
+                    grouped_exercises[exercise.language]["exercise_list"].append(exercise)
+
             template_name = 'exercises/list.html'
 
             context = {
-                'all_exercises': all_exercises
+                'all_exercises': grouped_exercises.values()
             }
         return render(request, template_name, context)
     elif request.method == 'POST':
