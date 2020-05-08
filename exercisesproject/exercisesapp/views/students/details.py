@@ -22,10 +22,13 @@ def create_student(cursor, row):
 
     student.exercises = []
 
-    exercise = Exercise()
-    exercise.id = _row["exercise_id"]
-    exercise.name = _row["exercise_name"]
-    exercise.language = _row["language"]
+    exercise = None
+
+    if _row["exercise_id"] is not None:
+        exercise = Exercise()
+        exercise.id = _row["exercise_id"]
+        exercise.name = _row["exercise_name"]
+        exercise.language = _row["language"]
 
 
     return  (student, exercise)
@@ -57,11 +60,11 @@ def get_student(student_id):
 
         this_student = None
 
-        for (s, exercise) in student_assignments:
+        for (student, exercise) in student_assignments:
             if this_student is None:
-                if exercise.id is not None:
-                    s.exercises.append(exercise)
-                this_student = s
+                if exercise is not None:
+                    student.exercises.append(exercise)
+                this_student = student
             else:
                 this_student.exercises.append(exercise)
             
