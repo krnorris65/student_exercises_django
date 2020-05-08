@@ -5,7 +5,7 @@
 {% if exercise.id is not None%}
 <form action="{% url 'exercisesapp:exercise' exercise.id %}" method="POST">
     {% else %}
-    <form action="{% url 'exercisesapp:students' %}" method="POST">
+    <form action="{% url 'exercisesapp:exercises' %}" method="POST">
     {% endif %}
     {% csrf_token %}
     <fieldset>

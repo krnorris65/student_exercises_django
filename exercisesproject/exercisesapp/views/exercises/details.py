@@ -91,3 +91,35 @@ def exercise_details(request, exercise_id):
         }
 
         return render(request, template, context)
+
+    elif request.method == 'POST':
+        form_data = request.POST
+        if (
+            "actual_method" in form_data
+            and form_data["actual_method"] == "PUT"
+        ):
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute(""" 
+                UPDATE exercisesapp_exercise
+                SET name = ?,
+                language = ?
+                WHERE id = ?
+                """,
+                (form_data['name'], form_data['language'], exercise_id))
+            
+            return redirect('exercisesapp:exercise', exercise_id)
+        if (
+            "actual_method" in form_data
+            and form_data["actual_method"] == "DELETE"
+        ):
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute("""
+                    DELETE FROM exercisesapp_exercise
+                    WHERE id = ?
+                """, (exercise_id,))
+
+            return redirect(reverse('exercisesapp:exercises'))

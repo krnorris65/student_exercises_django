@@ -83,7 +83,7 @@ def student_details(request, student_id):
         }
 
         return render(request, template, context)
-    if request.method == 'POST':
+    elif request.method == 'POST':
         form_data = request.POST
         if (
             "actual_method" in form_data

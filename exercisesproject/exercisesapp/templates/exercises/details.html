@@ -6,15 +6,15 @@
     <h3>{{exercise.language}}</h3>
 </section>
 <section id="exercise-actions">
-    <!-- <form action="{% url 'exercisesapp:exercise_edit_form' exercise.id %}" method="GET">
+    <form action="{% url 'exercisesapp:exercise_edit_form' exercise.id %}" method="GET">
         {%csrf_token%}
         <button>Edit</button>
-    </form> -->
-    <!-- <form action="{% url 'exercisesapp:exercise' exercise.id %}" method="POST">
+    </form>
+    <form action="{% url 'exercisesapp:exercise' exercise.id %}" method="POST">
         {%csrf_token%}
         <input type="hidden" name="actual_method" value="DELETE">
         <button>Delete</button>
-    </form> -->
+    </form>
 </section>
 <section id="exercise-assignments">
     <h4>Assigned to:</h4>
