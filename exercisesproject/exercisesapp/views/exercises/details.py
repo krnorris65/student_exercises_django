@@ -15,23 +15,25 @@ def create_exercise(cursor, row):
 
     exercise.assignments = []
 
-    student = Student()
-    student.id = _row["student_id"]
-    student.first_name = _row["s_first"]
-    student.last_name = _row["s_last"]
-    student.slack_handle = _row["s_slack"]
-    student.cohort_id = _row["s_cohort"]
+    assignment = None
+    if _row["student_id"] is not None:
+        student = Student()
+        student.id = _row["student_id"]
+        student.first_name = _row["s_first"]
+        student.last_name = _row["s_last"]
+        student.slack_handle = _row["s_slack"]
+        student.cohort_id = _row["s_cohort"]
 
-    instructor = Instructor()
-    instructor.id = _row["instructor_id"]
-    instructor.first_name = _row["i_first"]
-    instructor.last_name = _row["i_last"]
-    instructor.slack_handle = _row["i_slack"]
-    instructor.specialty = _row["specialty"]
-    instructor.cohort_id = _row["i_cohort"]
+        instructor = Instructor()
+        instructor.id = _row["instructor_id"]
+        instructor.first_name = _row["i_first"]
+        instructor.last_name = _row["i_last"]
+        instructor.slack_handle = _row["i_slack"]
+        instructor.specialty = _row["specialty"]
+        instructor.cohort_id = _row["i_cohort"]
 
 
-    assignment = (student, instructor)
+        assignment = (student, instructor)
 
     return (exercise, assignment)
 
@@ -69,7 +71,7 @@ def get_exercise(exercise_id):
         this_exercise = None
         for (exercise, assignment) in exercise_assignments:
             if this_exercise is None:
-                if assignment[0].id is not None:
+                if assignment is not None:
                     exercise.assignments.append(assignment)
                 this_exercise = exercise
             else:
