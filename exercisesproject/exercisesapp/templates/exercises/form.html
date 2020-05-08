@@ -10,13 +10,13 @@
     {% csrf_token %}
     <fieldset>
         <label for="name">Name: </label>
-        <input id="name" type="text" name="name" value="{{ exercise.name }}">
+        <input required id="name" type="text" name="name" value="{{ exercise.name }}">
     </fieldset>
     <fieldset>
         <label for="language">Language: </label>
-        <input id="language" type="text" name="language" value="{{ exercise.language }}">
+        <input required id="language" type="text" name="language" value="{{ exercise.language }}">
     </fieldset>
-    
+
     {% if exercise.id is not None %}
     <input type="hidden" name="actual_method" value="PUT">
     {% endif %}

@@ -65,19 +65,6 @@ def instructor_details(request, instructor_id):
             with sqlite3.connect(Connection.db_path) as conn:
                 db_cursor = conn.cursor()
 
-                cohort = form_data['cohort']
-                slack = form_data['slack_handle']
-                specialty = form_data['specialty']
-
-
-                # if these fields are empty save them as NULL values in database, not EMPTY values
-                if cohort == "":
-                    cohort = None
-                if slack == "":
-                    slack = None
-                if specialty == "":
-                    specialty = None
-
                 db_cursor.execute("""
                 UPDATE exercisesapp_instructor
                 SET cohort_id = ?,
@@ -85,7 +72,7 @@ def instructor_details(request, instructor_id):
                     specialty = ?
                 WHERE id = ?
                 """,
-                (cohort, slack, specialty, instructor_id,))
+                (form_data['cohort'], form_data['slack_handle'], form_data['specialty'], instructor_id,))
 
                 db_cursor.execute("""
                 UPDATE auth_user
