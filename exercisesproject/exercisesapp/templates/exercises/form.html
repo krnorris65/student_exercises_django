@@ -1,0 +1,26 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+<h2>Exercise Form</h2>
+{% if exercise.id is not None%}
+<form action="{% url 'exercisesapp:exercise' exercise.id %}" method="POST">
+    {% else %}
+    <form action="{% url 'exercisesapp:exercises' %}" method="POST">
+    {% endif %}
+    {% csrf_token %}
+    <fieldset>
+        <label for="name">Name: </label>
+        <input required id="name" type="text" name="name" value="{{ exercise.name }}">
+    </fieldset>
+    <fieldset>
+        <label for="language">Language: </label>
+        <input required id="language" type="text" name="language" value="{{ exercise.language }}">
+    </fieldset>
+
+    {% if exercise.id is not None %}
+    <input type="hidden" name="actual_method" value="PUT">
+    {% endif %}
+
+    <input type="submit" value="Submit" />
+</form>
+{% endblock %}

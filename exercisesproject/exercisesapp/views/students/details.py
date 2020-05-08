@@ -22,10 +22,13 @@ def create_student(cursor, row):
 
     student.exercises = []
 
-    exercise = Exercise()
-    exercise.id = _row["exercise_id"]
-    exercise.name = _row["exercise_name"]
-    exercise.language = _row["language"]
+    exercise = None
+
+    if _row["exercise_id"] is not None:
+        exercise = Exercise()
+        exercise.id = _row["exercise_id"]
+        exercise.name = _row["exercise_name"]
+        exercise.language = _row["language"]
 
 
     return  (student, exercise)
@@ -47,9 +50,9 @@ def get_student(student_id):
             e.name exercise_name,
             e.language
         FROM exercisesapp_student s
-        JOIN exercisesapp_cohort c ON c.id = s.cohort_id
-        JOIN exercisesapp_assignment a ON a.student_id = s.id
-        JOIN exercisesapp_exercise e ON e.id = a.exercise_id
+        LEFT JOIN exercisesapp_cohort c ON c.id = s.cohort_id
+        LEFT JOIN exercisesapp_assignment a ON a.student_id = s.id
+        LEFT JOIN exercisesapp_exercise e ON e.id = a.exercise_id
         WHERE s.id = ?            
         """, (student_id,))
 
@@ -57,10 +60,11 @@ def get_student(student_id):
 
         this_student = None
 
-        for (s, exercise) in student_assignments:
+        for (student, exercise) in student_assignments:
             if this_student is None:
-                s.exercises.append(exercise)
-                this_student = s
+                if exercise is not None:
+                    student.exercises.append(exercise)
+                this_student = student
             else:
                 this_student.exercises.append(exercise)
             
@@ -79,7 +83,7 @@ def student_details(request, student_id):
         }
 
         return render(request, template, context)
-    if request.method == 'POST':
+    elif request.method == 'POST':
         form_data = request.POST
         if (
             "actual_method" in form_data

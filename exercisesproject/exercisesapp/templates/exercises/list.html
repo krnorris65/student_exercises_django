@@ -1,0 +1,21 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+<h2>Exercises</h2>
+<a href="{% url 'exercisesapp:exercise_form' %}">New Exercise</a>
+
+
+    {% for group in all_exercises %}
+    <h4>{{group.language}}</h4>
+    <ul>
+        {% for exercise in group.exercise_list %}
+        <li>
+            <div>
+                {{exercise.name}}
+                <a href="{% url 'exercisesapp:exercise' exercise.id %}">See Assignments</a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+{% endblock %}
