@@ -1,0 +1,28 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+<h2>{{exercise.name}}</h2>
+<h3>Assign exercise to a student in your cohort</h3>
+
+<form action="{% url 'exercisesapp:exercise' exercise.id %}" method="POST">
+    {% csrf_token %}
+    <fieldset>
+        <label for="student">Student: </label>
+        <select required id="student" type="text" name="student">
+            <option value="">--Select Student--</option>
+            {% for student in all_students %}
+            <option value="{{ student.id }}">
+                {{ student.first_name }} {{ student.last_name }}
+            </option>
+            {% endfor %}
+        </select>
+    </fieldset>
+
+    <!-- include hidden input to indicate that a different resource is being targeted -->
+    <input type="hidden" name="actual_resource" value="assignment">
+
+    <input type="submit" value="Submit" />
+</form>
+
+
+{% endblock %}

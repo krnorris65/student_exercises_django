@@ -18,6 +18,10 @@
 </section>
 <section id="exercise-assignments">
     <h4>Assigned to:</h4>
+    <form action="{% url 'exercisesapp:assignment_form' exercise.id %}" method="GET">
+        {%csrf_token%}
+        <button>Assign to Student</button>
+    </form>
     <ul>
         {% for assignment in exercise.assignments %}
         <li>{{assignment.0.first_name}} {{assignment.0.last_name}} (assigned by {{assignment.1.first_name}} {{assignment.1.last_name}})</li>

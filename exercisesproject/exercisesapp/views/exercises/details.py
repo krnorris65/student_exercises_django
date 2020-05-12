@@ -95,6 +95,7 @@ def exercise_details(request, exercise_id):
 
     elif request.method == 'POST':
         form_data = request.POST
+        # updates exercise
         if (
             "actual_method" in form_data
             and form_data["actual_method"] == "PUT"
@@ -111,6 +112,7 @@ def exercise_details(request, exercise_id):
                 (form_data['name'], form_data['language'], exercise_id))
             
             return redirect('exercisesapp:exercise', exercise_id)
+        # deletes exercise
         if (
             "actual_method" in form_data
             and form_data["actual_method"] == "DELETE"
@@ -124,3 +126,22 @@ def exercise_details(request, exercise_id):
                 """, (exercise_id,))
 
             return redirect(reverse('exercisesapp:exercises'))
+
+        # creates assignment
+        if (
+            "actual_resource" in form_data
+            and form_data["actual_resource"] == "assignment"
+        ):
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute("""
+                INSERT INTO exercisesapp_assignment
+                (
+                    exercise_id, student_id, instructor_id
+                )
+                VALUES (?, ?, ?)
+                """,
+                (exercise_id, form_data['student'], request.user.instructor.id))
+
+            return redirect('exercisesapp:exercise', exercise_id)

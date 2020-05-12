@@ -22,5 +22,6 @@ urlpatterns = [
     path('cohorts/<int:cohort_id>/', cohort_details, name="cohort"),
     path('cohorts/new/', cohort_form, name="cohort_form"),
     path('cohorts/<int:cohort_id>/edit/', cohort_edit_form, name="cohort_edit_form"),
+    path('exercises/<int:exercise_id>/assign', assignment_form, name="assignment_form"),
 
 ]
