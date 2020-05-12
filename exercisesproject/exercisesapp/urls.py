@@ -17,5 +17,10 @@ urlpatterns = [
     path('exercises/', exercise_list, name="exercises"),
     path('exercises/<int:exercise_id>/', exercise_details, name="exercise"),
     path('exercises/new/', exercise_form, name="exercise_form"),
-    path('exercises/<int:exercise_id>/edit/', exercise_edit_form, name="exercise_edit_form")
+    path('exercises/<int:exercise_id>/edit/', exercise_edit_form, name="exercise_edit_form"),
+    path('cohorts/', cohort_list, name="cohorts"),
+    path('cohorts/<int:cohort_id>/', cohort_details, name="cohort"),
+    path('cohorts/new/', cohort_form, name="cohort_form"),
+    path('cohorts/<int:cohort_id>/edit/', cohort_edit_form, name="cohort_edit_form"),
+
 ]
