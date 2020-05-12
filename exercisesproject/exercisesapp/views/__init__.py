@@ -13,6 +13,7 @@ from .exercises.list import exercise_list
 from .exercises.details import exercise_details
 from .exercises.form import exercise_form
 from .exercises.form import exercise_edit_form
+from .exercises.form import assignment_form
 
 from .cohorts.list import cohort_list
 from .cohorts.details import cohort_details
