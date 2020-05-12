@@ -20,7 +20,7 @@ def get_exercise(exercise_id):
 
         return db_cursor.fetchone()
 
-def get_students():
+def get_students(request):
     with sqlite3.connect(Connection.db_path) as conn:
         conn.row_factory = model_factory(Student)
         db_cursor = conn.cursor()
@@ -33,8 +33,10 @@ def get_students():
             s.slack_handle,
             s.cohort_id
         FROM exercisesapp_student s
+        JOIN exercisesapp_instructor i ON i.cohort_id = s.cohort_id
+        WHERE i.id = ?
         ORDER BY s.last_name 
-        """)
+        """, (request.user.instructor.id,))
 
         return db_cursor.fetchall()
 
@@ -63,7 +65,7 @@ def exercise_edit_form(request, exercise_id):
 def assignment_form(request, exercise_id):
     if request.method == 'GET':
         exercise = get_exercise(exercise_id)
-        students = get_students()
+        students = get_students(request)
         template = 'exercises/assignment_form.html'
         context = {
             'all_students': students,

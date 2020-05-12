@@ -1,7 +1,8 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
-<h2>Assign Exercise: {{exercise.name}}</h2>
+<h2>{{exercise.name}}</h2>
+<h3>Assign exercise to a student in your cohort</h3>
 
 <form action="{% url 'exercisesapp:exercise' exercise.id %}" method="POST">
     {% csrf_token %}
