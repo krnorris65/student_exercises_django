@@ -1,10 +1,11 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
-<h2>Cohort Form</h2>
 {% if cohort.id is not None%}
+<h2>Update Cohort Name</h2>
 <form action="{% url 'exercisesapp:cohort' cohort.id %}" method="POST">
     {% else %}
+    <h2>New Cohort</h2>
     <form action="{% url 'exercisesapp:cohorts' %}" method="POST">
     {% endif %}
     {% csrf_token %}
