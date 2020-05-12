@@ -2,7 +2,7 @@ import sqlite3
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from exercisesapp.models import Instructor, Student, Exercise
+from exercisesapp.models import Instructor, Student, Exercise, Assignment
 from ..connection import Connection
 
 def create_exercise(cursor, row):
@@ -16,7 +16,7 @@ def create_exercise(cursor, row):
     exercise.assignments = []
 
     assignment = None
-    if _row["student_id"] is not None:
+    if _row["assignment_id"] is not None:
         student = Student()
         student.id = _row["student_id"]
         student.first_name = _row["s_first"]
@@ -32,8 +32,12 @@ def create_exercise(cursor, row):
         instructor.specialty = _row["specialty"]
         instructor.cohort_id = _row["i_cohort"]
 
+        assignment = Assignment()
+        assignment.id = _row["assignment_id"]
+        assignment.instructor = instructor
+        assignment.student = student
+        assignment.exercise = exercise
 
-        assignment = (student, instructor)
 
     return (exercise, assignment)
 
@@ -57,7 +61,8 @@ def get_exercise(exercise_id):
             i.specialty,
             i.cohort_id i_cohort,
             u.first_name i_first,
-            u.last_name i_last
+            u.last_name i_last,
+            a.id assignment_id
         FROM exercisesapp_exercise e
         LEFT JOIN exercisesapp_assignment a ON a.exercise_id = e.id
         LEFT JOIN exercisesapp_student s ON a.student_id = s.id
@@ -144,4 +149,23 @@ def exercise_details(request, exercise_id):
                 """,
                 (exercise_id, form_data['student'], request.user.instructor.id))
 
+            return redirect('exercisesapp:exercise', exercise_id)
+
+def delete_assignment(request, assignment_id, exercise_id):
+    if request.method == 'POST':
+        form_data = request.POST
+        if (
+            "actual_resource" in form_data
+            and form_data["actual_resource"] == "assignment"
+            and "actual_method" in form_data
+            and form_data["actual_method"] == "DELETE"
+        ):
+            # exercise_id is actually the assignment_id
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute("""
+                    DELETE FROM exercisesapp_assignment
+                    WHERE id = ?
+                """, (assignment_id,))
             return redirect('exercisesapp:exercise', exercise_id)

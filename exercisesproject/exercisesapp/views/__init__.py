@@ -11,6 +11,7 @@ from .students.form import student_edit_form
 
 from .exercises.list import exercise_list
 from .exercises.details import exercise_details
+from .exercises.details import delete_assignment
 from .exercises.form import exercise_form
 from .exercises.form import exercise_edit_form
 from .exercises.form import assignment_form
