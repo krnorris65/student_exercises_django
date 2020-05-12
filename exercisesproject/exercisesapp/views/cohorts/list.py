@@ -27,19 +27,19 @@ def cohort_list(request):
                 'all_cohorts': all_cohorts
             }
         return render(request, template_name, context)
-    # elif request.method == 'POST':
-    #     form_data = request.POST
+    elif request.method == 'POST':
+        form_data = request.POST
 
-    #     with sqlite3.connect(Connection.db_path) as conn:
-    #         db_cursor = conn.cursor()
+        with sqlite3.connect(Connection.db_path) as conn:
+            db_cursor = conn.cursor()
 
-    #         db_cursor.execute("""
-    #         INSERT INTO exercisesapp_exercise
-    #         (
-    #             name, language
-    #         )
-    #         VALUES (?, ?)
-    #         """,
-    #         (form_data['name'], form_data['language']))
+            db_cursor.execute("""
+            INSERT INTO exercisesapp_cohort
+            (
+                name
+            )
+            VALUES (?)
+            """,
+            (form_data['name'],))
 
-    #     return redirect(reverse('exercisesapp:exercises'))
+        return redirect(reverse('exercisesapp:cohorts'))
