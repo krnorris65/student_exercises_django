@@ -2,7 +2,7 @@ import sqlite3
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from exercisesapp.models import Instructor, Student, Exercise
+from exercisesapp.models import Instructor, Student, Exercise, Assignment
 from ..connection import Connection
 
 def create_exercise(cursor, row):
@@ -16,7 +16,7 @@ def create_exercise(cursor, row):
     exercise.assignments = []
 
     assignment = None
-    if _row["student_id"] is not None:
+    if _row["assignment_id"] is not None:
         student = Student()
         student.id = _row["student_id"]
         student.first_name = _row["s_first"]
@@ -32,8 +32,12 @@ def create_exercise(cursor, row):
         instructor.specialty = _row["specialty"]
         instructor.cohort_id = _row["i_cohort"]
 
+        assignment = Assignment()
+        assignment.id = _row["assignment_id"]
+        assignment.instructor = instructor
+        assignment.student = student
+        assignment.exercise = exercise
 
-        assignment = (student, instructor, _row["assignment_id"])
 
     return (exercise, assignment)
 
