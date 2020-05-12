@@ -80,6 +80,7 @@ def get_exercise(exercise_id):
         
         return this_exercise
 
+@login_required
 def exercise_details(request, exercise_id):
     if request.method == 'GET':
         exercise = get_exercise(exercise_id)

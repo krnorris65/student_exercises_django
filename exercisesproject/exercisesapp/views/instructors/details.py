@@ -45,6 +45,7 @@ def get_instructor(instructor_id):
 
         return db_cursor.fetchone()
 
+@login_required
 def instructor_details(request, instructor_id):
     if request.method == 'GET':
         instructor = get_instructor(instructor_id)
