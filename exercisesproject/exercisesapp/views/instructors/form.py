@@ -38,6 +38,7 @@ def get_cohorts():
 
         return db_cursor.fetchall()
 
+@login_required
 def instructor_edit_form(request, instructor_id):
 
     if request.method == 'GET':

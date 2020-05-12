@@ -1,4 +1,5 @@
 from .home import home
+from .auth.logout import logout_user
 from .instructors.list import instructor_list
 from .instructors.details import instructor_details
 from .instructors.form import instructor_edit_form

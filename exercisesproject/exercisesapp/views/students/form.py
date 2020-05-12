@@ -36,6 +36,7 @@ def get_cohorts():
 
         return db_cursor.fetchall()
 
+@login_required
 def student_form(request):
     if request.method == 'GET':
         cohorts = get_cohorts()
@@ -47,6 +48,7 @@ def student_form(request):
 
         return render(request, template, context)
 
+@login_required
 def student_edit_form(request, student_id):
     if request.method == 'GET':
         student = get_student(student_id)

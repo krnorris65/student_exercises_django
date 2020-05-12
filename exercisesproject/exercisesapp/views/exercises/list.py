@@ -4,6 +4,7 @@ from exercisesapp.models import Exercise, model_factory
 from ..connection import Connection
 from django.contrib.auth.decorators import login_required
 
+@login_required
 def exercise_list(request):
     if request.method == 'GET':
         with sqlite3.connect(Connection.db_path) as conn:

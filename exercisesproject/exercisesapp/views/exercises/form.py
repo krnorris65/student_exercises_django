@@ -20,6 +20,7 @@ def get_exercise(exercise_id):
 
         return db_cursor.fetchone() 
 
+@login_required
 def exercise_form(request):
     if request.method == 'GET':
 
@@ -28,6 +29,7 @@ def exercise_form(request):
 
         return render(request, template, context)
 
+@login_required
 def exercise_edit_form(request, exercise_id):
     if request.method == 'GET':
         exercise = get_exercise(exercise_id)

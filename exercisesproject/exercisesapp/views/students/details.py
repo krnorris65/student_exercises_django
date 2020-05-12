@@ -71,7 +71,7 @@ def get_student(student_id):
         
         return this_student
 
-
+@login_required
 def student_details(request, student_id):
     if request.method == 'GET':
         student = get_student(student_id)
