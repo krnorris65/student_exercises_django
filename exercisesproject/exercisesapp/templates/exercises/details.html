@@ -24,7 +24,15 @@
     </form>
     <ul>
         {% for assignment in exercise.assignments %}
-        <li>{{assignment.0.first_name}} {{assignment.0.last_name}} (assigned by {{assignment.1.first_name}} {{assignment.1.last_name}})</li>
+        <li>{{assignment.0.first_name}} {{assignment.0.last_name}} (assigned by {{assignment.1.first_name}} {{assignment.1.last_name}})
+            <form action="{% url 'exercisesapp:delete_assignment' exercise.id assignment.2 %}" method="POST">
+                {%csrf_token%}
+                <!-- include hidden input to indicate that a different resource is being targeted -->
+                <input type="hidden" name="actual_resource" value="assignment"> 
+                <input type="hidden" name="actual_method" value="DELETE">
+                <button>Delete Assignment</button>
+            </form>
+        </li>
         {% endfor %}
     </ul>
 </section>

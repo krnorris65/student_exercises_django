@@ -33,7 +33,7 @@ def create_exercise(cursor, row):
         instructor.cohort_id = _row["i_cohort"]
 
 
-        assignment = (student, instructor)
+        assignment = (student, instructor, _row["assignment_id"])
 
     return (exercise, assignment)
 
@@ -57,7 +57,8 @@ def get_exercise(exercise_id):
             i.specialty,
             i.cohort_id i_cohort,
             u.first_name i_first,
-            u.last_name i_last
+            u.last_name i_last,
+            a.id assignment_id
         FROM exercisesapp_exercise e
         LEFT JOIN exercisesapp_assignment a ON a.exercise_id = e.id
         LEFT JOIN exercisesapp_student s ON a.student_id = s.id
@@ -144,4 +145,23 @@ def exercise_details(request, exercise_id):
                 """,
                 (exercise_id, form_data['student'], request.user.instructor.id))
 
+            return redirect('exercisesapp:exercise', exercise_id)
+
+def delete_assignment(request, assignment_id, exercise_id):
+    if request.method == 'POST':
+        form_data = request.POST
+        if (
+            "actual_resource" in form_data
+            and form_data["actual_resource"] == "assignment"
+            and "actual_method" in form_data
+            and form_data["actual_method"] == "DELETE"
+        ):
+            # exercise_id is actually the assignment_id
+            with sqlite3.connect(Connection.db_path) as conn:
+                db_cursor = conn.cursor()
+
+                db_cursor.execute("""
+                    DELETE FROM exercisesapp_assignment
+                    WHERE id = ?
+                """, (assignment_id,))
             return redirect('exercisesapp:exercise', exercise_id)
