@@ -144,4 +144,4 @@ def exercise_details(request, exercise_id):
                 """,
                 (exercise_id, form_data['student'], request.user.instructor.id))
 
-            return redirect(reverse('exercisesapp:exercises'))
+            return redirect('exercisesapp:exercise', exercise_id)
