@@ -1,0 +1,21 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+<h2>Cohorts</h2>
+<a href="{% url 'exercisesapp:cohort_form' %}">New Cohort</a>
+
+
+    {% for group in all_exercises %}
+    <h4>{{group.language}}</h4>
+    <ul>
+        {% for cohort in group.cohort_list %}
+        <li>
+            <div>
+                {{cohort.name}}
+                <a href="{% url 'exercisesapp:cohort' cohort.id %}">Details</a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+{% endblock %}

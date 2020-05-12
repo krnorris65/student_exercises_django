@@ -1,0 +1,22 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+<h2>Cohort Form</h2>
+{% if cohort.id is not None%}
+<form action="{% url 'exercisesapp:cohort' cohort.id %}" method="POST">
+    {% else %}
+    <form action="{% url 'exercisesapp:cohorts' %}" method="POST">
+    {% endif %}
+    {% csrf_token %}
+    <fieldset>
+        <label for="name">Name: </label>
+        <input required id="name" type="text" name="name" value="{{ cohort.name }}">
+    </fieldset>
+
+    {% if cohort.id is not None %}
+    <input type="hidden" name="actual_method" value="PUT">
+    {% endif %}
+
+    <input type="submit" value="Submit" />
+</form>
+{% endblock %}

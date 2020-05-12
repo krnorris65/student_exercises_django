@@ -1,0 +1,31 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+<section id="cohort-details">
+    <h2>{{cohort.name}}</h2>
+</section>
+<section id="cohort-actions">
+    <form action="{% url 'exercisesapp:exercise_edit_form' cohort.id %}" method="GET">
+        {%csrf_token%}
+        <button>Edit</button>
+    </form>
+
+</section>
+<section id="cohort-instructors">
+    <h4>Instructors:</h4>
+    <!-- <ul>
+        {% for instructor in cohort.instructors %}
+        <li>{{instructor.0.first_name}} {{instructor.0.last_name}}</li>
+        {% endfor %}
+    </ul> -->
+</section>
+<section id="cohort-students">
+    <h4>Students:</h4>
+    <!-- <ul>
+        {% for student in cohort.students %}
+        <li>{{student.0.first_name}} {{student.0.last_name}}</li>
+        {% endfor %}
+    </ul> -->
+</section>
+
+{% endblock %}
