@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     {% block css %}
     {% endblock css%}
 </head>
+
 <body>
     <nav id="site-nav">
         <ul class="navList">
@@ -15,7 +17,11 @@
             <li class="navList__route"><a href="{% url 'exercisesapp:students' %}">Students</a></li>
             <li class="navList__route"><a href="{% url 'exercisesapp:exercises' %}">Exercises</a></li>
             <li class="navList__route"><a href="{% url 'exercisesapp:cohorts' %}">Cohorts</a></li>
+            {% if request.user.is_authenticated %}
             <li class="navList__route"><a href="{% url 'exercisesapp:logout' %}">Logout</a></li>
+            {% else %}
+            <li class="navList__route"><a href="{% url 'exercisesapp:login' %}">Login</a></li>
+            {% endif%}
         </ul>
     </nav>
     {% block content %}
@@ -24,4 +30,5 @@
     {% block scripts %}
     {% endblock scripts%}
 </body>
+
 </html>
