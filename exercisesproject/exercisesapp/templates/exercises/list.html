@@ -7,12 +7,10 @@
 
     {% for group in all_exercises %}
     <h4>{{group.language}}</h4>
-    <ul>
+    <ul class="content_list">
         {% for exercise in group.exercise_list %}
-        <li>
-            <div>
-                <a href="{% url 'exercisesapp:exercise' exercise.id %}">{{exercise.name}}</a>
-            </div>
+        <li class="content_list_item">
+            <a href="{% url 'exercisesapp:exercise' exercise.id %}">{{exercise.name}}</a>
         </li>
         {% endfor %}
     </ul>

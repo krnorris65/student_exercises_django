@@ -25,3 +25,16 @@ body {
     display: flex;
     margin-left: auto;
 }
+
+.content_list {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.content_list_item {
+    border: 1px solid lightgray;
+    padding: 1em;
+    margin: .5em;
+    flex-basis: 12%;
+}

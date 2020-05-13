@@ -5,12 +5,10 @@
 <a href="{% url 'exercisesapp:cohort_form' %}">New Cohort</a>
 
 
-<ul>
+<ul class="content_list">
     {% for cohort in all_cohorts %}
-    <li>
-        <div>
-            <a href="{% url 'exercisesapp:cohort' cohort.id %}">{{cohort.name}}</a>
-        </div>
+    <li class="content_list_item">
+        <a href="{% url 'exercisesapp:cohort' cohort.id %}">{{cohort.name}}</a>
     </li>
     {% endfor %}
 </ul>

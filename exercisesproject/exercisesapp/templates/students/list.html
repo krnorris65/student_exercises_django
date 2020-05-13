@@ -5,9 +5,9 @@
 
 <a href="{% url 'exercisesapp:student_form' %}">New Student</a>
 
-<ul>
+<ul class="content_list">
     {% for s in all_students %}
-    <li><a href="{% url 'exercisesapp:student' s.id %}">{{s.first_name}} {{s.last_name}} </a></li>
+    <li class="content_list_item"><a href="{% url 'exercisesapp:student' s.id %}">{{s.first_name}} {{s.last_name}} </a></li>
     {% endfor %}
 </ul>
 {% endblock %}

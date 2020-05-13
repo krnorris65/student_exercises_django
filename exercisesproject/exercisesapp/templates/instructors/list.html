@@ -3,9 +3,9 @@
 {% block content %}
 <h2>List of Instructors</h2>
 
-<ul>
+<ul class="content_list">
     {%for i in all_instructors%}
-        <li><a href="{% url 'exercisesapp:instructor' i.id %}">{{i.first_name}} {{i.last_name}} </a></li>
+        <li class="content_list_item"><a href="{% url 'exercisesapp:instructor' i.id %}">{{i.first_name}} {{i.last_name}} </a></li>
         
     {%endfor%}
 </ul>
