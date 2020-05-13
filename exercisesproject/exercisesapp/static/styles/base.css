@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 1.5em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.main-content {
+    padding: .5em 1em;
+}
+
+.navList {
+    list-style-type: none;
+    display: flex;
+    border: 1px solid lightgray;
+    padding: 1em;
+    margin: 0;
+}
+
+.navList__route {
+    margin: 0 0.5em;
+}
+
+.navList__user {
+    display: flex;
+    margin-left: auto;
+}

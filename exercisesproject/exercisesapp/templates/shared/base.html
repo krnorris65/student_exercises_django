@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercises</title>
+    <link rel="stylesheet" href="{% static 'styles/base.css' %}">
     {% block css %}
     {% endblock css%}
 </head>
@@ -13,20 +14,24 @@
 <body>
     <nav id="site-nav">
         <ul class="navList">
+            <li class="navList__route"><a href="{% url 'exercisesapp:cohorts' %}">Cohorts</a></li>
             <li class="navList__route"><a href="{% url 'exercisesapp:instructors' %}">Instructors</a></li>
             <li class="navList__route"><a href="{% url 'exercisesapp:students' %}">Students</a></li>
             <li class="navList__route"><a href="{% url 'exercisesapp:exercises' %}">Exercises</a></li>
-            <li class="navList__route"><a href="{% url 'exercisesapp:cohorts' %}">Cohorts</a></li>
-            {% if request.user.is_authenticated %}
-            <li class="navList__route"><a href="{% url 'exercisesapp:logout' %}">Logout</a></li>
-            {% else %}
-            <li class="navList__route"><a href="{% url 'exercisesapp:login' %}">Login</a></li>
-            {% endif%}
+            <div class="navList__user">
+                {% if request.user.is_authenticated %}
+                <li class="navList__route">Welcome {{request.user.first_name}}!</li>
+                <li class="navList__route"><a href="{% url 'exercisesapp:logout' %}">Logout</a></li>
+                {% else %}
+                <li class="navList__route"><a href="{% url 'exercisesapp:login' %}">Login</a></li>
+                {% endif%}
+            </div>
         </ul>
     </nav>
-    {% block content %}
-    {% endblock content%}
-
+    <main class="main-content">
+        {% block content %}
+        {% endblock content%}
+    </main>
     {% block scripts %}
     {% endblock scripts%}
 </body>
