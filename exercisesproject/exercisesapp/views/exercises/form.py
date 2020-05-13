@@ -20,7 +20,7 @@ def get_exercise(exercise_id):
 
         return db_cursor.fetchone()
 
-def get_students(request):
+def get_students(request, exercise_id):
     with sqlite3.connect(Connection.db_path) as conn:
         conn.row_factory = model_factory(Student)
         db_cursor = conn.cursor()
@@ -34,9 +34,15 @@ def get_students(request):
             s.cohort_id
         FROM exercisesapp_student s
         JOIN exercisesapp_instructor i ON i.cohort_id = s.cohort_id
-        WHERE i.id = ?
-        ORDER BY s.last_name 
-        """, (request.user.instructor.id,))
+        WHERE i.id = ? AND s.id NOT IN (
+            SELECT
+                s.id
+            FROM exercisesapp_student s
+            LEFT JOIN exercisesapp_assignment a ON a.student_id = s.id
+            WHERE a.exercise_id =?
+        )
+        ORDER BY s.last_name
+        """, (request.user.instructor.id, exercise_id))
 
         return db_cursor.fetchall()
 
@@ -65,7 +71,7 @@ def exercise_edit_form(request, exercise_id):
 def assignment_form(request, exercise_id):
     if request.method == 'GET':
         exercise = get_exercise(exercise_id)
-        students = get_students(request)
+        students = get_students(request, exercise_id)
         template = 'exercises/assignment_form.html'
         context = {
             'all_students': students,
