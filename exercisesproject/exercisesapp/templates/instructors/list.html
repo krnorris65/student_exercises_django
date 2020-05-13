@@ -5,7 +5,7 @@
 
 <ul>
     {%for i in all_instructors%}
-        <li>{{i.first_name}} {{i.last_name}} <a href="{% url 'exercisesapp:instructor' i.id %}">More Info</a></li>
+        <li><a href="{% url 'exercisesapp:instructor' i.id %}">{{i.first_name}} {{i.last_name}} </a></li>
         
     {%endfor%}
 </ul>

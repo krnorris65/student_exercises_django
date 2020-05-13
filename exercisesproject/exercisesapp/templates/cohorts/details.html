@@ -15,7 +15,7 @@
     <h4>Instructors:</h4>
     <ul>
         {% for instructor in cohort.instructors %}
-        <li>{{instructor.first_name}} {{instructor.last_name}}</li>
+        <li><a href="{% url 'exercisesapp:instructor' instructor.id %}">{{instructor.first_name}} {{instructor.last_name}}</a></li>
         {% endfor %}
     </ul>
 </section>
@@ -23,7 +23,7 @@
     <h4>Students:</h4>
     <ul>
         {% for student in cohort.students %}
-        <li>{{student.first_name}} {{student.last_name}}</li>
+        <li><a href="{% url 'exercisesapp:student' student.id %}">{{student.first_name}} {{student.last_name}}</a></li>
         {% endfor %}
     </ul>
 </section>

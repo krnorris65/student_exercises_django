@@ -9,8 +9,7 @@
     {% for cohort in all_cohorts %}
     <li>
         <div>
-            {{cohort.name}}
-            <a href="{% url 'exercisesapp:cohort' cohort.id %}">Details</a>
+            <a href="{% url 'exercisesapp:cohort' cohort.id %}">{{cohort.name}}</a>
         </div>
     </li>
     {% endfor %}
