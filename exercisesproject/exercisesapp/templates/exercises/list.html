@@ -11,8 +11,7 @@
         {% for exercise in group.exercise_list %}
         <li>
             <div>
-                {{exercise.name}}
-                <a href="{% url 'exercisesapp:exercise' exercise.id %}">See Assignments</a>
+                <a href="{% url 'exercisesapp:exercise' exercise.id %}">{{exercise.name}}</a>
             </div>
         </li>
         {% endfor %}

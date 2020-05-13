@@ -3,7 +3,7 @@
 {% block content%}
 <section id="instructor-details">
     <h2>{{instructor.first_name}} {{instructor.last_name}}</h2>
-    <h3>Currently instructing: {{instructor.cohort.name}}</h3>
+    <h3>Currently instructing: <a href="{% url 'exercisesapp:cohort' instructor.cohort.id %}">{{instructor.cohort.name}}</a></h3>
     <p>Slack Handle: {{instructor.slack_handle}}</p>
     <p>Specialty: {{instructor.specialty}}</p>
 </section>
